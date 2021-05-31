@@ -33,7 +33,7 @@ def call(String buildJobStatus = 'STARTED') {
   hipchatSend (color: buildColor, notify: true, message: summary)
 
   emailext (
-      to: 'ghebreym@gmx.de',
+      to: 'mghebreyesus@hilscher.com, ghebreym@gmx.de',
       subject: mailSubject,
       body: mailDetails,
       recipientProviders: [[$class: 'DevelopersRecipientProvider']]
