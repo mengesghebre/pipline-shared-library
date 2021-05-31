@@ -30,7 +30,7 @@ def call(String buildJobStatus = 'STARTED') {
   // Send status notifications
   // slackSend (color: buildColorCode, message: summary)
 
-  hipchatSend (color: buildColor, notify: true, message: summary)
+  // hipchatSend (color: buildColor, notify: true, message: summary)
 
   emailext (
       to: 'mghebreyesus@hilscher.com, ghebreym@gmx.de',
