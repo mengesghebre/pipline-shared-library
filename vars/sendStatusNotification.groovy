@@ -1,41 +1,41 @@
 #!/usr/bin/env groovy
 
 /**
- * Send status notifications based on outcomde
+ * Send status notifications based on outcome
  */
-def call(String buildStatus = 'STARTED') {
-  // build status of null means successful
-  buildStatus =  buildStatus ?: 'SUCCESSFUL'
+def call(String buildJobStatus = 'STARTED') {
+
+  buildJobStatus =  buildJobStatus ?: 'SUCCESSFUL'
 
   // Default values
-  def colorName = 'RED'
-  def colorCode = '#FF0000'
-  def subject = "${buildStatus}: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'"
-  def summary = "${subject} (${env.BUILD_URL})"
-  def details = """<p>${buildStatus}: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]':</p>
+  def buildColorName = 'RED'
+  def buildColorCode = '#FF0000'
+  def mailSubject = "${buildJobStatus}: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'"
+  def summary = "${mailSubject} (${env.BUILD_URL})"
+  def mailDetails = """<p>${buildJobStatus}: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]':</p>
     <p>Check console output at &QUOT;<a href='${env.BUILD_URL}'>${env.JOB_NAME} [${env.BUILD_NUMBER}]</a>&QUOT;</p>"""
 
-  // Based on build status override  values 
-  if (buildStatus == 'STARTED') {
-    color = 'YELLOW'
-    colorCode = '#FFFF00'
-  } else if (buildStatus == 'SUCCESSFUL') {
-    color = 'GREEN'
-    colorCode = '#00FF00'
+  // Override values based on build status 
+  if (buildJobStatus == 'STARTED') {
+    buildColor = 'YELLOW'
+    buildColorCode = '#FFFF00'
+  } else if (buildJobStatus == 'SUCCESSFUL') {
+    buildColor = 'GREEN'
+    buildColorCode = '#00FF00'
   } else {
-    color = 'RED'
-    colorCode = '#FF0000'
+    buildColor = 'RED'
+    buildColorCode = '#FF0000'
   }
 
   // Send status notifications
-  // slackSend (color: colorCode, message: summary)
+  // slackSend (color: buildColorCode, message: summary)
 
-  hipchatSend (color: color, notify: true, message: summary)
+  hipchatSend (color: buildColor, notify: true, message: summary)
 
   emailext (
       to: 'mghebreyesus@hilscher.com',
-      subject: subject,
-      body: details,
+      subject: mailSubject,
+      body: mailDetails,
       recipientProviders: [[$class: 'DevelopersRecipientProvider']]
     )
 }
