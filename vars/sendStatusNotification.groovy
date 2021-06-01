@@ -3,7 +3,7 @@
 /**
  * Send status notifications based on outcome
  */
-def call(String buildJobStatus = 'STARTED') {
+def call(String buildJobStatus = 'STARTED', string recipient = 'mghebreyesus@hilscher.com') {
 
   buildJobStatus =  buildJobStatus ?: 'SUCCESSFUL'
 
@@ -33,7 +33,7 @@ def call(String buildJobStatus = 'STARTED') {
   // hipchatSend (color: buildColor, notify: true, message: summary)
 
   emailext (
-      to: 'mghebreyesus@hilscher.com, ghebreym@gmx.de',
+      to: recipient,
       subject: mailSubject,
       body: mailDetails,
       recipientProviders: [[$class: 'DevelopersRecipientProvider']]
