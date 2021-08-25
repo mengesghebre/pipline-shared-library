@@ -111,6 +111,7 @@ def call(Closure body) {
                                 buildParamColl.buildParams.tag_to_training = "Yes"
                                 buildParamColl.buildParams.tag_to_development = "Yes"
                                 buildParamColl.buildParams.create_license_report = "Yes"
+                                buildParamColl.buildParams.tag_latest = 'Yes'
                                 head_points_to_tag = sh(returnStdout: true, script: 'git fetch --tags && git tag --points-at HEAD | awk NF').trim()
                                 if(head_points_to_tag == versionstring) {
                                     buildParamColl.buildParams.create_version= "Yes"
@@ -121,6 +122,7 @@ def call(Closure body) {
                                 buildParamColl.buildParams.tag= "Yes"
                                 buildParamColl.buildParams.tag_to_training = "Yes"
                                 buildParamColl.buildParams.tag_to_development = "Yes"
+                                buildParamColl.buildParams.tag_latest_dev = 'Yes'
                                 break
                             default:
                                 sh("""
@@ -338,6 +340,12 @@ def call(Closure body) {
 
                         if (env.cifx_manager == "No" && env.tag_to_development == "Yes") {
                             buildHelper.multiArchTag(acrDev_Id, buildParams.project_name, versionstring, buildParams.build_archs)
+                            if (env.tag_latest == "Yes") {
+                                buildHelper.multiArchTag(acrDev_Id, buildParams.project_name, versionstring, buildParams.build_archs, "latest")
+                            }
+                            if (env.tag_latest_dev  == "Yes") {
+                                buildHelper.multiArchTag(acrDev_Id, buildParams.project_name, versionstring, buildParams.build_archs, "latest-dev")
+                            }
                             if (env.create_version == "Yes") {
                                 buildHelper.addVerionsInNetfield(versionstring, acrDev_Id + "/" + buildParams.project_name + ":" + versionstring, "dev", "True", "All")
                             }
