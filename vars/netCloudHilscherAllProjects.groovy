@@ -113,7 +113,6 @@ def call(Map args) {
         hash = checkout(scm).GIT_COMMIT
 
         // Execute the git-version-gen buildscript. For more info on the buildscripts see:
-        // https://bitbucket.hilscher.com/projects/NF/repos/buildscripts
         versionstring = sh returnStdout: true , script: 'git-version-gen'
         // versionstring = '864ed28b.bugfix-GWT-72-gwt-cockpit-plugin-save-button-always-disabled'
         print "#### versionstring : "+ versionstring

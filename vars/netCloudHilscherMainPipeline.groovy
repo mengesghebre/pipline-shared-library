@@ -65,7 +65,6 @@ def call(Closure body) {
                         }
                         hash = checkout(scm).GIT_COMMIT
                         // Execute the git-version-gen buildscript. For more info on the buildscripts see:
-                        // https://bitbucket.hilscher.com/projects/NF/repos/buildscripts
                         env.versionstring = sh returnStdout: true , script: 'git-version-gen'
 
                         switch (env.BRANCH_NAME) {

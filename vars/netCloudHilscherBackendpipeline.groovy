@@ -101,7 +101,6 @@ def call(Closure body) {
                         }
                         hash = checkout(scm).GIT_COMMIT
                         // Execute the git-version-gen buildscript. For more info on the buildscripts see:
-                        // https://bitbucket.hilscher.com/projects/NF/repos/buildscripts
                         env.versionstring = sh returnStdout: true , script: 'git-version-gen'
 
                         switch (env.BRANCH_NAME) {
@@ -252,7 +251,6 @@ def call(Closure body) {
                             moduleUrl = acrDev_Id + "/" + buildParams.project_name + ":" + current_tag
 
                             // Execute the add_module buildscript. For more info on the buildscripts see:
-                            // https://bitbucket.hilscher.com/projects/NF/repos/buildscripts
                             sh "add_module " + buildParams.container_name + " " + buildParams.device_id + " " + moduleUrl + " " + acrDev_Id + " " + acrDev_USR + " " + acrDev_PSW + " --createOptions ./createOptions --connectionString ./connectionString " + buildParams.additional_modules.join(" ")
                             echo 'Module deployment command sent, waiting for completion of job'
                             sleep(time:1,unit:"MINUTES")
@@ -270,7 +268,6 @@ def call(Closure body) {
                             } finally {
                                 // Always clean up, even if test fail
                                 // Execute the remove_module buildscript. For more info on the buildscripts see:
-                                // https://bitbucket.hilscher.com/projects/NF/repos/buildscripts
                                 sh "remove_module " + buildParams.device_id + " --connectionString ./connectionString"
                                 echo "Successfully removed modules from device"
                             }
