@@ -118,6 +118,7 @@ def call(Closure body) {
                                 }
                                 break
                             case 'develop':
+                                log.info "Develop branch was updated - Tag in training and development"
                                 buildParamColl.buildParams.run_test = "No"
                                 buildParamColl.buildParams.tag= "Yes"
                                 buildParamColl.buildParams.tag_to_training = "Yes"
@@ -147,12 +148,14 @@ def call(Closure body) {
                                     buildParams.run_test = "Yes"
                                     // This is facy syntax for regex matching in groovy
                                     if (containingBranches =~ /develop/) {
+                                        log.info "Tag exists on develop"
                                         buildParamColl.buildParams.run_test = "No"
                                         buildParamColl.buildParams.tag= "Yes"
                                         buildParamColl.buildParams.tag_to_development = "Yes"
                                         buildParamColl.buildParams.create_version= "Yes"
                                     }
                                     if (containingBranches =~ /master/) {
+                                        log.info "Tag exists on master"
                                         buildParamColl.buildParams.run_test = "No"
                                         buildParamColl.buildParams.tag= "Yes"
                                         buildParamColl.buildParams.tag_to_production = "Yes"
