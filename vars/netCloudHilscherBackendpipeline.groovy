@@ -341,7 +341,7 @@ def call(Closure body) {
                             }
                         }
 
-                        if (env.cifx_manager == "No" && env.tag_to_development == "Yes") {
+                        if (env.tag_to_development == "Yes") {
                             buildHelper.multiArchTag(acrDev_Id, buildParams.project_name, versionstring, buildParams.build_archs)
                             if (env.tag_latest == "Yes") {
                                 buildHelper.multiArchTag(acrDev_Id, buildParams.project_name, versionstring, buildParams.build_archs, "latest")
@@ -349,7 +349,7 @@ def call(Closure body) {
                             if (env.tag_latest_dev  == "Yes") {
                                 buildHelper.multiArchTag(acrDev_Id, buildParams.project_name, versionstring, buildParams.build_archs, "latest-dev")
                             }
-                            if (env.create_version == "Yes") {
+                            if (env.cifx_manager == "No" && env.create_version == "Yes") {
                                 buildHelper.addVerionsInNetfield(versionstring, acrDev_Id + "/" + buildParams.project_name + ":" + versionstring, "dev", "True", "All")
                             }
                         }
