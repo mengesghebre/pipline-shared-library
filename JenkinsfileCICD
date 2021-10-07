@@ -1,0 +1,45 @@
+@Library('jenkins-shared-libraries') _
+
+pipeline {
+  agent any
+	stages {
+		stage ('Setup parameters') {
+			steps {
+				script {
+					properties([
+						parameters([
+							choice(
+								choices: ['', 
+										  'netFIELD_App_OPC_UA_Client',
+										  'netFIELD_App_Edge_Monitor',
+										  'netFIELD_App_Platform_Connector',
+										  'netFIELD_App_PROFINET_Device',
+										  'netFIELD_App_OPC_UA_Server'
+										 ], 
+								name: 'project_name_to_release'
+							),
+							string(
+								defaultValue: '', 
+								name: 'Version'
+							),
+							text(
+								defaultValue: '', 
+								name: 'Releasenotes', 
+							)
+						])
+					])
+				}
+			}
+		}
+		stage('Printing parameters') {
+			steps {
+				script {
+					echo "Chossen project is : $params.project_name_to_release"
+					log.info "Chossen project is : " + $params.project_name_to_release
+					log.info "Entered Releasenotes is : " + $params.Releasenotes
+					log.info "Entered Version is : " + $params.Version
+				}
+			}
+		}
+	}
+}
